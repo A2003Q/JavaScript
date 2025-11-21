@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SweetAlert If Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+        }
+        .box {
+            font-size: 20px;
+            background: #f0f8ff;
+            padding: 20px;
+            width: 300px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px #ccc;
+            margin-top: 20px;
+        }
+        span {
+            font-weight: bold;
+            color: #007acc;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Result:</h2>
+<div class="box">
+    <p id="result"></p>
+</div>
+
+<script>
+  
+    let x = parseFloat(prompt("Enter value for x:"));
+    let y = parseFloat(prompt("Enter value for y:"));
+
+    let message, iconType;
+
+
+    if (x > y) {
+        message = "Hello World 😃";
+        iconType = "success"; 
+    } else {
+        message = "Goodbye 😔";
+        iconType = "warning"; 
+    }
+
+    
+    Swal.fire({
+        title: message,
+        icon: iconType,
+        confirmButtonText: "OK",
+        background: "#f0f8ff",
+        color: "#007acc",
+        confirmButtonColor: "#007acc"
+    });
+
+    
+    console.log(message);
+
+    
+    document.getElementById("result").textContent = message;
+</script>
+
+</body>
+</html>
+
