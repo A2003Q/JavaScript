@@ -1,7 +1,7 @@
 window.onload = function () {
   Swal.fire({
-    title: "Welcome! 👋",
-    text: "Let's start your stylish calculator!",
+    title: "Welcome!",
+    text: "Let's start your calculator!",
     icon: "success",
     confirmButtonText: "Start"
   }).then(() => {
