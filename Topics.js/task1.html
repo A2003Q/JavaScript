@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form onsubmit="return validateForm()">
+
+  <input id="fname" placeholder="First Name"><br>
+  <input id="lname" placeholder="Last Name"><br>
+  <input id="bdate" type="date"><br>
+
+  <input id="email1" placeholder="Email"><br>
+  <input id="email2" placeholder="Confirm Email"><br>
+
+  <input id="pass1" placeholder="Password" type="password"><br>
+  <input id="pass2" placeholder="Confirm Password" type="password"><br>
+
+  <input id="mobile" placeholder="Mobile Number"><br>
+
+  <button type="submit">Register</button>
+</form>
+
+<p id="error" style="color:red;"></p>
+<p id="success" style="color:green;"></p>
+<script>
+function validateForm() {
+  let fname = document.getElementById("fname").value.trim();
+  let lname = document.getElementById("lname").value.trim();
+  let birth = document.getElementById("bdate").value;
+  let email1 = document.getElementById("email1").value.trim();
+  let email2 = document.getElementById("email2").value.trim();
+  let pass1 = document.getElementById("pass1").value;
+  let pass2 = document.getElementById("pass2").value;
+  let mobile = document.getElementById("mobile").value.trim();
+
+  let error = document.getElementById("error");
+  let success = document.getElementById("success");
+  error.innerText = "";
+  success.innerText = "";
+
+  // 1) First & Last Name: only letters
+  let nameRegex = /^[A-Za-z]+$/;
+  if (!nameRegex.test(fname) || !nameRegex.test(lname)) {
+    error.innerText = "Names must contain letters only.";
+    return false;
+  }
+
+  // 2) Birth Date Validation
+  if (!birth) {
+    error.innerText = "Please enter your birth date.";
+    return false;
+  }
+  let birthDate = new Date(birth);
+  let today = new Date();
+
+  if (birthDate > today) {
+    error.innerText = "Birth date cannot be in the future.";
+    return false;
+  }
+
+  // 3) Email structure using RegEx
+  let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email1)) {
+    error.innerText = "Invalid email structure.";
+    return false;
+  }
+
+  // 4) Email confirmation
+  if (email1 !== email2) {
+    error.innerText = "Emails do not match.";
+    return false;
+  }
+
+  // 5) Password validation rules
+  let capitalStart = /^[A-Z]/;
+  let twoNumbers = /(.*\d.*\d)/;
+  let specialChar = /[!@#$%^&*(),.?":{}|<>]/;
+
+  if (!capitalStart.test(pass1)) {
+    error.innerText = "Password must start with a capital letter.";
+    return false;
+  }
+  if (!twoNumbers.test(pass1)) {
+    error.innerText = "Password must contain at least two numbers.";
+    return false;
+  }
+  if (!specialChar.test(pass1)) {
+    error.innerText = "Password must include at least one special character.";
+    return false;
+  }
+  if (pass1.length < 8 || pass1.length > 32) {
+    error.innerText = "Password length must be between 8 and 32 characters.";
+    return false;
+  }
+  if (pass1 !== pass2) {
+    error.innerText = "Passwords do not match.";
+    return false;
+  }
+
+  // 6) Mobile number = 10 digits
+  let phoneRegex = /^\d{10}$/;
+  if (!phoneRegex.test(mobile)) {
+    error.innerText = "Mobile number must be exactly 10 digits.";
+    return false;
+  }
+
+  // If all validations pass
+  success.innerText = "Registration successful!";
+  return false; // remove when connecting to backend
+}
+</script>
+
+</body>
+</html>
