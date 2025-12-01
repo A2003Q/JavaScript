@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+        <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+        }
+        table {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<h3>Enter Your Info</h3>
+
+<label>Name: </label>
+<input type="text" id="name"><br><br>
+
+<label>Email: </label>
+<input type="text" id="email"><br><br>
+
+<label>Mobile: </label>
+<input type="text" id="mobile"><br><br>
+
+<button id="showBtn">Show Info</button>
+
+<h3>Result:</h3>
+<p id="result"></p>
+
+<br><br>
+
+
+
+<button id="addBtn">Add User</button>
+<button id="hideBtn">Hide Table</button>
+
+<!-- Table -->
+<table id="userTable" style="display:none">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Rows will be added here -->
+    </tbody>
+</table>
+
+<script>
+    let nameInput = document.getElementById("name");
+    let emailInput = document.getElementById("email");
+    let mobileInput = document.getElementById("mobile");
+    let result = document.getElementById("result");
+    let showBtn = document.getElementById("showBtn");
+
+    showBtn.onclick = function() {
+        // Step 1: create a JSON object
+        let user = {
+            name: nameInput.value,
+            email: emailInput.value,
+            mobile: mobileInput.value
+        };
+
+        // Step 2: Display only the values as a string
+        result.textContent = user.name + " " + user.email + " " + user.mobile;
+    };
+
+
+    const table = document.getElementById("userTable");
+    const tbody = table.querySelector("tbody");
+    const addBtn = document.getElementById("addBtn");
+    const hideBtn = document.getElementById("hideBtn");
+
+    addBtn.onclick = function() {
+        // Get input values
+        const nameValue = document.getElementById("name").value.trim();
+        const emailValue = document.getElementById("email").value.trim();
+        const mobileValue = document.getElementById("mobile").value.trim();
+
+        // Optional: skip empty inputs
+        if (!nameValue || !emailValue || !mobileValue) {
+            alert("Please fill all fields!");
+            return;
+        }
+
+        // Create JSON object
+        const user = {
+            name: nameValue,
+            email: emailValue,
+            mobile: mobileValue
+        };
+
+        // Create new row
+        const row = document.createElement("tr");
+
+        const nameCell = document.createElement("td");
+        nameCell.textContent = user.name;
+
+        const emailCell = document.createElement("td");
+        emailCell.textContent = user.email;
+
+        const mobileCell = document.createElement("td");
+        mobileCell.textContent = user.mobile;
+
+        row.appendChild(nameCell);
+        row.appendChild(emailCell);
+        row.appendChild(mobileCell);
+
+        // Append row to table
+        tbody.appendChild(row);
+
+        // Show table
+        table.style.display = "table";
+
+        // Clear input fields
+        document.getElementById("name").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("mobile").value = "";
+    };
+
+    // Hide table button
+    hideBtn.onclick = function() {
+        table.style.display = "none";
+    };
+
+</script>
+
+
+
+
+</body>
+</html>

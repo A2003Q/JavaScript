@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Ideas Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 6px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .card {
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 15px;
+            width: 250px;
+            background-color: #e0f7fa;
+        }
+        .card h4 {
+            margin: 0 0 10px 0;
+            color: #00796b;
+        }
+        .card p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Project Ideas Form</h2>
+
+<form id="projectForm">
+    <label>Subject:</label>
+    <input type="text" id="subject" required>
+
+    <label>Description:</label>
+    <textarea id="description" rows="3" required></textarea>
+
+    <label>User Types:</label>
+    <select id="userType" required>
+        <option value="">Select</option>
+        <option value="Student">Student</option>
+        <option value="Teacher">Teacher</option>
+        <option value="Developer">Developer</option>
+        <option value="Other">Other</option>
+    </select>
+
+    <label>Technology Used:</label>
+    <input type="text" id="technology" required>
+
+    <button type="submit" style="margin-top:15px;">Submit</button>
+</form>
+
+<h3>Submitted Project Ideas:</h3>
+<div class="card-container" id="cardsContainer"></div>
+
+<script>
+    const form = document.getElementById('projectForm');
+    const cardsContainer = document.getElementById('cardsContainer');
+
+    // Function to get stored data from sessionStorage
+    function getStoredProjects() {
+        let data = sessionStorage.getItem('projectIdeas');
+        return data ? JSON.parse(data) : [];
+    }
+
+    // Function to render cards
+    function renderCards() {
+        const projects = getStoredProjects();
+        cardsContainer.innerHTML = '';
+        projects.forEach(project => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <h4>${project.subject}</h4>
+                <p><strong>Description:</strong> ${project.description}</p>
+                <p><strong>User Types:</strong> ${project.userType}</p>
+                <p><strong>Technology:</strong> ${project.technology}</p>
+            `;
+            cardsContainer.appendChild(card);
+        });
+    }
+
+    // Initial render on page load
+    renderCards();
+
+    // Handle form submission
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Get values
+        const subject = document.getElementById('subject').value.trim();
+        const description = document.getElementById('description').value.trim();
+        const userType = document.getElementById('userType').value;
+        const technology = document.getElementById('technology').value.trim();
+
+        // Create project object
+        const project = { subject, description, userType, technology };
+
+        // Get existing projects, add new project, and store in sessionStorage
+        const existingProjects = getStoredProjects();
+        existingProjects.push(project);
+        sessionStorage.setItem('projectIdeas', JSON.stringify(existingProjects));
+
+        // Render the cards
+        renderCards();
+
+        // Reset form
+        form.reset();
+    });
+</script>
+
+</body>
+</html>

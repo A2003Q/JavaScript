@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Button Hover Example</title>
+
+    <style>
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        .success {
+            color: green;
+            font-size: 14px;
+        }
+            #myBox {
+        width: 200px;
+        height: 200px;
+        background-color: lavender;
+        border: 2px solid #555;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    /* Animation class (lavender flash every 0.5s) */
+    @keyframes lavenderFlash {
+        0% { background-color: lavender; }
+        50% { background-color: white; }
+        100% { background-color: lavender; }
+    }
+
+    .runAnimation {
+        animation: lavenderFlash 0.5s infinite;
+    }
+    </style>
+
+
+
+</head>
+
+<body>
+
+    <!-- Button with JS events -->
+    <button 
+        onmouseover="hoverBtn(this)" 
+        onmouseout="leaveBtn(this)"
+    >
+          <h1>Hello World !!!</h1>
+
+    </button>
+
+    <hr>
+    <label for="countries">Choose a country:</label>
+    <select id="countries" name="countries">
+    <option value="jordan">jordan</option>
+    <option value="brazil">Brazil</option>
+    <option value="australia">australia</option>
+    <option value="india">india</option>
+    <option value="england">england</option>
+    </select>
+    <img id="flag" src="" alt="Country flag" style="margin-top:20px;width:200px;display:block;">
+
+    <hr>
+
+    <label >Password(min 6 characters):</label>
+    <input type="password" id="password">
+    <span id="passMsg" ></span>
+      <br>
+    <label >Repeat Password:</label>
+    <input type="password" id="repeat" placeholder="password">
+    <span id="repeatMsg"></span>
+      <br>
+    <button id="submit">submit</button>
+
+    <br>
+    <br>
+
+    <div style="border: 1px solid black;" >What is lorem ipsum ?
+      <span ><button id="show"><u>Show</u></button></span>
+      <p id="result1"></p>
+    </div>
+        <br>
+        <div style="border: 1px solid black;">why do we use it?
+          <p id="result3">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ratione, vitae a. Magnam accusamus earum, mollitia, necessitatibus, hic libero labore officia dicta fugiat animi tempora ea doloremque quidem error quis provident?</p>
+      <span ><button id="hide"><u>Hide</u></button></span>
+    </div>
+    <br>
+     <div style="border: 1px solid black;" >where dose it come from?
+      <span ><button id="show2"><u>Show</u></button></span>
+      <p id="result2"></p>
+    </div>
+
+
+    <br><br>
+<!-- Font Family -->
+<select id="fontSelect">
+    <option value="">Choose font</option>
+    <option value="Arial">Arial</option>
+    <option value="Times New Roman">Times New Roman</option>
+    <option value="Courier New">Courier New</option>
+</select>
+
+<!-- Font Size -->
+<select id="sizeSelect">
+    <option value="">Font Size</option>
+    <option value="14px">14</option>
+    <option value="18px">18</option>
+    <option value="22px">22</option>
+    <option value="26px">26</option>
+</select>
+
+<!-- Checkboxes -->
+<label><input type="checkbox" id="boldChk"> Bold</label>
+<label><input type="checkbox" id="underlineChk"> Underline</label>
+<label><input type="checkbox" id="italicChk"> Italic</label>
+
+<br><br>
+
+<textarea id="textBox" rows="5" cols="40" placeholder="Type something..."></textarea>
+
+<br><br>
+
+
+<div id="myBox">Click me</div>
+    
+
+    <script>
+        function hoverBtn(btn) {
+            btn.style.backgroundColor = "yellow" ;
+            btn.style.fontWeight = "bold" ;
+        }
+
+        function leaveBtn(btn) {
+            btn.style.backgroundColor = "white";
+            btn.style.fontWeight = "normal";
+        }
+
+    const countries = document.getElementById('countries');
+  const flagImg = document.getElementById('flag');
+
+  
+  const countryFlags = {
+    jordan: 'https://upload.wikimedia.org/wikipedia/commons/c/c0/Flag_of_Jordan.svg',
+    brazil: 'https://upload.wikimedia.org/wikipedia/en/0/05/Flag_of_Brazil.svg',
+    australia: 'https://upload.wikimedia.org/wikipedia/en/b/b9/Flag_of_Australia.svg',
+    india: 'https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg',
+    england: 'https://upload.wikimedia.org/wikipedia/en/b/be/Flag_of_England.svg'
+  };
+
+  
+  countries.addEventListener('change', () => {
+    const selected = countries.value;
+    if(selected && countryFlags[selected]){
+      flagImg.src = countryFlags[selected];
+      flagImg.alt = selected + ' flag';
+    } else {
+      flagImg.src = '';
+      flagImg.alt = 'Country flag';
+    }
+  });
+
+
+      // Get elements
+    let password = document.getElementById("password");
+    let repeat = document.getElementById("repeat");
+    let passMsg = document.getElementById("passMsg");
+    let repeatMsg = document.getElementById("repeatMsg");
+    let submit=document.getElementById("submit");
+
+    // When typing in password
+    submit.onclick = function () {
+        if (password.value.length < 6) {
+            passMsg.innerHTML = "Password is too short!";
+            passMsg.className = "error";
+        } else {
+            passMsg.innerHTML = "Password length is OK ✔";
+            passMsg.className = "success";
+        }
+           if (repeat.value !== password.value) {
+            repeatMsg.innerHTML = "Passwords do NOT match!";
+            repeatMsg.className = "error";
+        } else {
+            repeatMsg.innerHTML = "Passwords match ✔";
+            repeatMsg.className = "success";
+        }
+    };
+
+    let show=document.getElementById("show");
+    let result1=document.getElementById("result1");
+    let hide=document.getElementById("hide");
+    let result3=document.getElementById("result3");
+    let show2=document.getElementById("show2");
+    let result2=document.getElementById("result2");
+
+
+    show.onclick= function(){
+         result1.innerHTML= "is a fake (dummy) text used by designers and developers as a placeholder when they don’t want to use real content yet.";
+    };
+     show2.onclick= function(){
+         result2.innerHTML= "Lorem Ipsum comes from an old Latin text written in 45 BC by the Roman philosopher Cicero.";
+    };
+    
+    hide.onclick=function(){
+       result3.remove();
+    }
+
+
+
+      let textBox = document.getElementById("textBox");
+
+    // Checkboxes
+    let boldChk = document.getElementById("boldChk");
+    let underlineChk = document.getElementById("underlineChk");
+    let italicChk = document.getElementById("italicChk");
+
+    // Bold checkbox
+    boldChk.onchange = function () {
+        textBox.style.fontWeight = boldChk.checked ? "bold" : "normal";
+    };
+
+    // Underline checkbox
+    underlineChk.onchange = function () {
+        textBox.style.textDecoration = underlineChk.checked ? "underline" : "none";
+    };
+
+    // Italic checkbox
+    italicChk.onchange = function () {
+        textBox.style.fontStyle = italicChk.checked ? "italic" : "normal";
+    };
+
+    // Font family
+    fontSelect.onchange = function () {
+        textBox.style.fontFamily = fontSelect.value;
+    };
+
+    // Font size
+    sizeSelect.onchange = function () {
+        textBox.style.fontSize = sizeSelect.value;
+    };
+
+
+     let box = document.getElementById("myBox");
+
+    box.onclick = function () {
+        box.classList.toggle("runAnimation");
+    };
+    </script>
+
+</body>
+</html>
